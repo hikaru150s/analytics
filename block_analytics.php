@@ -67,7 +67,7 @@ class block_analytics extends block_list {
 		
 		// Dependencies Check
 		// SQL 1: show tables WHERE tables_in_mtemp like 'mdl_adaptive%' or tables_in_mtemp like 'mdl_block_adg%' or tables_in_mtemp like 'mdl_collab%'
-		$var = "Tables_in_$CFG->dbname";
+		$var = "tables_in_$CFG->dbname";
 		$checksql = "show tables where $var like 'mdl_adaptive%' or $var like 'mdl_block_adg%' or $var like 'mdl_collab%'";
 		$dep = $DB->get_records_sql($checksql);
 		$check = array(
