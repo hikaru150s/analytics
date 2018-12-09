@@ -171,7 +171,16 @@ class block_analytics extends block_list {
      * @return string[] Array of pages and permissions.
      */
     public function applicable_formats() {
-        return array(
-        );
+        return array('all' => false,
+                     'site' => true,
+                     'site-index' => true,
+                     'course-view' => true, 
+                     'course-view-social' => false,
+                     'mod' => true, 
+                     'mod-quiz' => false);
+    }
+	
+	public function instance_allow_multiple() {
+          return true;
     }
 }
