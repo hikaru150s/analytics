@@ -22,7 +22,7 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('Edit');
 
 $settingsnode = $PAGE->settingsnav->add(ucfirst($type));
-$editurl = new moodle_url('/blocks/analytics/view.php', array('id' => $id, 'courseid' => $courseid, 'blockid' => $blockid));
+$editurl = new moodle_url('/blocks/analytics/view.php', array('type' => $type, 'courseid' => $courseid, 'blockid' => $blockid));
 $editnode = $settingsnode->add('Edit', $editurl);
 $editnode->make_active();
 

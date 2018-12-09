@@ -31,7 +31,7 @@ function get_user_quiz($userid) {
 	
 	$sql = "select * from mdl_adaptive_transactions where userid = $userid order by attempttime asc";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -44,7 +44,7 @@ function get_user_quiz($userid) {
 		return $result;
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -55,7 +55,7 @@ function mean_of_quiz($userid) {
 	
 	$sql = "select avg(score) as average from mdl_adaptive_transactions where userid = $userid";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return 0;
 	} else {
@@ -66,7 +66,7 @@ function mean_of_quiz($userid) {
 		return (is_null($result)) ? 0 : $result->average;
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -77,7 +77,7 @@ function get_group_evaluation($userid) {
 	
 	$sql = "select avg(score) as score, `time` from mdl_block_adg_collab_history where touser = $userid group by sessionid order by time asc";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -88,7 +88,7 @@ function get_group_evaluation($userid) {
 		return $result;
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -109,7 +109,7 @@ function list_students_in_course($courseid) {
 	
 	$sql = "select id, username, firstname, lastname, email from mdl_user where id in (select userid from mdl_user_enrolments where enrolid in (select id from mdl_enrol where courseid = $courseid))";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -120,7 +120,7 @@ function list_students_in_course($courseid) {
 		return $result;
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -131,7 +131,7 @@ function get_groups($courseid) {
 	
 	$q1 = "select * from mdl_block_adg_mbti_group where courseid = $courseid";
 	
-	$res1 = $DB->query($q1);
+	$res1 = $DB->get_records_sql($q1);
 	if (is_null($res1)) {
 		return null;
 	} else {
@@ -139,7 +139,7 @@ function get_groups($courseid) {
 		foreach ($res1 as $v) {
 			$result[$v->id . '. ' . $v->name] = array();
 			$q2 = 'select a.userid, a.nim, a.name, b.type, a.degree, a.level from mdl_block_adg_mbti_user a, mdl_block_adg_mbti_char b where a.characteristic = b.id and groupid = ' . $v->id;
-			$res2 = $DB->query($q2);
+			$res2 = $DB->get_records_sql($q2);
 			if (is_null($res2)) {
 				$result[$v->id . '. ' . $v->name][] = null;
 			} else {
@@ -151,7 +151,7 @@ function get_groups($courseid) {
 		return $result;
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -162,7 +162,7 @@ function get_group_from_user($userid) {
 	
 	$sql = "select * from mdl_block_adg_mbti_group where id = (select groupid from mdl_block_adg_mbti_user where id = $userid)";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -173,7 +173,7 @@ function get_group_from_user($userid) {
 		return $result;
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -184,7 +184,7 @@ function list_group_from_user($userid) {
 	
 	$sql = "select * from mdl_block_adg_mbti_user where groupid = (select groupid from mdl_block_adg_mbti_user where id = $userid)";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -195,7 +195,7 @@ function list_group_from_user($userid) {
 		return $result;
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -472,7 +472,7 @@ function var_knowledge($courseid) {
 	//$sql = "select avg(score) as average from mdl_adaptive_transactions where adaptiveid = (select id from mdl_adaptive where course = $courseid) group by userid";
 	$sql = "select avg(score) as average from mdl_adaptive_transactions where userid in (select id from mdl_user where id in (select userid from mdl_user_enrolments where enrolid in (select id from mdl_enrol where courseid = $courseid))) group by userid order by userid asc";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -487,7 +487,7 @@ function var_knowledge($courseid) {
 		return array_map($func, normalize($result, 'average'));
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -498,7 +498,7 @@ function var_sharing($courseid) {
 	
 	$sql = "select avg(score) as average from mdl_block_adg_collab_history where courseid = $courseid and questionid in " . str_range(1, 3) . " group by touser order by touser asc";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -513,7 +513,7 @@ function var_sharing($courseid) {
 		return array_map($func, normalize($result, 'average'));
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -524,7 +524,7 @@ function var_negotiating($courseid) {
 	
 	$sql = "select avg(score) as average from mdl_block_adg_collab_history where courseid = $courseid and questionid in " . str_range(4, 13) . " group by touser order by touser asc";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -539,7 +539,7 @@ function var_negotiating($courseid) {
 		return array_map($func, normalize($result, 'average'));
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -550,7 +550,7 @@ function var_regulating($courseid) {
 	
 	$sql = "select avg(score) as average from mdl_block_adg_collab_history where courseid = $courseid and questionid in " . str_range(14, 24) . " group by touser order by touser asc";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -565,7 +565,7 @@ function var_regulating($courseid) {
 		return array_map($func, normalize($result, 'average'));
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -576,7 +576,7 @@ function var_communication($courseid) {
 	
 	$sql = "select avg(score) as average from mdl_block_adg_collab_history where courseid = $courseid and questionid in " . str_range(25, 33) . " group by touser order by touser asc";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -591,7 +591,7 @@ function var_communication($courseid) {
 		return array_map($func, normalize($result, 'average'));
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
@@ -616,7 +616,7 @@ function var_skill($courseid) {
 	// One data (a.userid = 48) must be excluded in order to continue the process
 	$sql = "select avg(b.score) as average from mdl_block_adg_mbti_user a, mdl_collab_transactions b where a.groupid = b.groupid and a.userid != 48 and collabid = (select id from mdl_collab where course = $courseid) group by a.userid, b.groupid order by a.userid asc";
 	
-	$res = $DB->query($sql);
+	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
 		return null;
 	} else {
@@ -631,7 +631,7 @@ function var_skill($courseid) {
 		return array_map($func, normalize($result, 'average'));
 	}
 	
-	//return $DB->query($sql);
+	//return $DB->get_records_sql($sql);
 }
 
 /*
