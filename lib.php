@@ -1,6 +1,6 @@
 <?php
 # DEV
-require_once 'dev/autoload.php';
+//require_once 'dev/autoload.php';
 # END DEV
 require_once 'vendor/autoload.php';
 
