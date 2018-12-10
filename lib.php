@@ -390,7 +390,7 @@ function print_graph($arr, $chartname, $label, $value) {
 	$tickOption->ticks->beginAtZero = true;
 	
 	$chart = new stdClass();
-	$chart->type = 'line';
+	$chart->type = 'bar';
 	$chart->data = new stdClass();
 	$chart->data->labels = array_keys($data);
 	$chart->data->datasets = array($dataset);
@@ -676,10 +676,10 @@ function correlate($courseid) {
 			$v_x = count($u_x) > 1 || (count($u_x) == 1 && $u_x[0] > 0);
 			$v_y = count($u_y) > 1 || (count($u_y) == 1 && $u_y[0] > 0);
 			// Pearson must have at least 2 elements
-			if ($v_x && $v_y && count($vars[$x]) > 1 && count($vars[$y]) > 1) {
+			if ($v_x && $v_y && count($vars[$x]) > 1 && count($vars[$y]) > 1 && count($vars[$x]) == count($vars[$y])) {
 				$unit = Correlation::pearson($vars[$x], $vars[$y]);
-			} else {
-				$unit = 0;
+			} else if (count($vars[$x]) != count($vars[$y])) {
+				$unit = "Cannot calculate: $x count(" . count($vars[$x]) . ") different with $y count(" . count($vars[$y]) . ")";
 			}
 		}
 	}
