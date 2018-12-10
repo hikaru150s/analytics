@@ -2,14 +2,14 @@
 require_once '../../config.php';
 require_once 'lib.php';
 
-global $DB, $OUTPUT, $PAGE;
+global $DB, $OUTPUT, $PAGE, $USER;
 // Get required parameters
 $courseid = required_param('courseid', PARAM_INT);
 $blockid = required_param('blockid', PARAM_INT);
 $type = required_param('type', PARAM_TEXT);
 
 // Next look for optional variables.
-$studentid = optional_param('studentid', 0, PARAM_INT);
+$studentid = optional_param('studentid', $USER->id, PARAM_INT);
 
 if (!$course = $DB->get_record('course', array('id' => $courseid))) {
     print_error('invalidcourse', 'block_analytics', $courseid);
