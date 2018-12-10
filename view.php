@@ -19,11 +19,11 @@ require_login($course);
 
 $PAGE->set_url('/blocks/analytics/view.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard');
-$PAGE->set_heading('Edit');
+$PAGE->set_heading('Statistic');
 
 $settingsnode = $PAGE->settingsnav->add(ucfirst($type));
 $editurl = new moodle_url('/blocks/analytics/view.php', array('type' => $type, 'courseid' => $courseid, 'blockid' => $blockid));
-$editnode = $settingsnode->add('Edit', $editurl);
+$editnode = $settingsnode->add('Statistic', $editurl);
 $editnode->make_active();
 
 $backurl = new moodle_url('/course/view.php', array('id' => $courseid));
@@ -47,7 +47,7 @@ if ($permission == 2) {
 	switch ($type) {
 		case 'student' : {
 			require_once 'views/students.php';
-			echo view_students($courseid);
+			echo view_students($courseid, $blockid);
 			break;
 		}
 		case 'class' : {
@@ -64,7 +64,7 @@ if ($permission == 2) {
 			require_once 'views/quiz.php';
 			require_once 'views/groups.php';
 			require_once 'views/performance.php';
-			echo view_students($studentid);
+			echo view_quiz($studentid);
 			echo view_groups($studentid);
 			echo view_performance($studentid);
 			break;
@@ -76,7 +76,7 @@ if ($permission == 2) {
 	require_once 'views/quiz.php';
 	require_once 'views/groups.php';
 	require_once 'views/performance.php';
-	echo view_students($studentid);
+	echo view_quiz($studentid);
 	echo view_groups($studentid);
 	echo view_performance($studentid);
 	echo $OUTPUT->footer();

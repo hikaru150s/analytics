@@ -614,7 +614,7 @@ function var_skill($courseid) {
 	global $DB;
 	
 	// One data (a.userid = 48) must be excluded in order to continue the process
-	$sql = "select avg(b.score) as average from mdl_block_adg_mbti_user a, mdl_collab_transactions b where a.groupid = b.groupid and a.userid != 48 and collabid = (select id from mdl_collab where course = $courseid) group by a.userid, b.groupid order by a.userid asc";
+	$sql = "select avg(b.score) as average from mdl_block_adg_mbti_user a, mdl_collab_transactions b where a.groupid = b.groupid and a.userid != 48 and collabid in (select id from mdl_collab where course = $courseid) group by a.userid, b.groupid order by a.userid asc";
 	
 	$res = $DB->get_records_sql($sql);
 	if (is_null($res)) {
@@ -670,7 +670,17 @@ function correlate($courseid) {
 	// Fill matrix with Pearson Correlation
 	foreach($mat as $y => &$row) {
 		foreach ($row as $x => &$unit) {
-			$unit = Correlation::pearson($vars[$x], $vars[$y]);
+			// Unique check
+			$u_x = array_unique($vars[$x]);
+			$u_y = array_unique($vars[$y]);
+			$v_x = count($u_x) > 1 || (count($u_x) == 1 && $u_x[0] > 0);
+			$v_y = count($u_y) > 1 || (count($u_y) == 1 && $u_y[0] > 0);
+			// Pearson must have at least 2 elements
+			if ($v_x && $v_y && count($vars[$x]) > 1 && count($vars[$y]) > 1) {
+				$unit = Correlation::pearson($vars[$x], $vars[$y]);
+			} else {
+				$unit = 0;
+			}
 		}
 	}
 	// Return
