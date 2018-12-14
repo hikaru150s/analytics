@@ -44,19 +44,24 @@ if ( has_capability('block/analytics:managepages', $context) ) {
 // Set view based on type and permission
 if ($permission == 2) {
 	echo $OUTPUT->header();
+	require_once 'views/print.php';
+	
 	switch ($type) {
 		case 'student' : {
 			require_once 'views/students.php';
+			echo view_print();
 			echo view_students($courseid, $blockid);
 			break;
 		}
 		case 'class' : {
 			require_once 'views/classreport.php';
+			echo view_print();
 			echo view_classreport($courseid);
 			break;
 		}
 		case 'correlation' : {
 			require_once 'views/correlation.php';
+			echo view_print();
 			echo view_correlation($courseid);
 			break;
 		}
@@ -64,6 +69,7 @@ if ($permission == 2) {
 			require_once 'views/quiz.php';
 			require_once 'views/groups.php';
 			require_once 'views/performance.php';
+			echo view_print();
 			echo view_quiz($studentid);
 			echo view_groups($studentid);
 			echo view_performance($studentid);
@@ -76,6 +82,8 @@ if ($permission == 2) {
 	require_once 'views/quiz.php';
 	require_once 'views/groups.php';
 	require_once 'views/performance.php';
+	require_once 'views/print.php';
+	echo view_print();
 	echo view_quiz($studentid);
 	echo view_groups($studentid);
 	echo view_performance($studentid);

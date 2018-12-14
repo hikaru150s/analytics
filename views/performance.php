@@ -7,13 +7,13 @@ function view_performance($userid) {
 	$perf_stat = (!is_null($dataset) && count($dataset) > 0) ? stat_calc(normalize($dataset, 'score')) : null;
 
 	return
-		'<h1>Performance</h1>' .
+		'<h1 class="printable">Performance</h1>' .
 		print_table($dataset, 'table table-hover table-striped') .
-		'<hr/>' .
-		'<h1>Statistic</h1>' .
+		'<hr class="printable"/>' .
+		'<h1 class="printable">Statistic</h1>' .
 		print_stat($perf_stat) .
-		'<hr/>' .
-		'<h1>Graph</h1>' .
+		'<hr class="printable"/>' .
+		'<h1 class="printable">Graph</h1>' .
 		print_graph($dataset, 'performance', 'time', 'score') .
-		'<hr/>';
+		'<hr class="printable"/>';
 }

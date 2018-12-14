@@ -7,13 +7,13 @@ function view_quiz($userid) {
 	$quiz_stat = (!is_null($dataset) && count($dataset) > 0) ? stat_calc(normalize($dataset, 'score')) : null;
 
 	return 
-		'<h1>Quiz</h1>' .
+		'<h1 class="printable">Quiz</h1>' .
 		print_table($dataset, 'table table-hover table-striped') .
-		'<hr/>' .
-		'<h1>Statistic</h1>' .
+		'<hr class="printable"/>' .
+		'<h1 class="printable">Statistic</h1>' .
 		print_stat($quiz_stat) .
-		'<hr/>' .
-		'<h1>Graph</h1>' .
+		'<hr class="printable"/>' .
+		'<h1 class="printable">Graph</h1>' .
 		print_graph($dataset, 'quiz', 'attempttime', 'score') .
-		'<hr/>';
+		'<hr class="printable"/>';
 }

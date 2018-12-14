@@ -11,7 +11,7 @@ function view_students($courseid, $blockid) {
 	}
 
 	return
-		'<h1>Students</h1>' .
+		'<h1 class="printable">Students</h1>' .
 		print_table($dataset, 'table table-hover table-striped') .
-		'<hr/>';
+		'<hr class="printable"/>';
 }

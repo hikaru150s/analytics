@@ -13,10 +13,10 @@ function view_classreport($courseid) {
 	$groups = get_groups($courseid);
 
 	return
-		'<h1>Students</h1>' .
+		'<h1 class="printable">Students</h1>' .
 		print_table($dataset, 'table table-hover table-striped') .
-		'<hr/>' .
-		'<h1>Groups</h1>' .
+		'<hr class="printable"/>' .
+		'<h1 class="printable">Groups</h1>' .
 		print_groups($groups) .
-		'<hr/>';
+		'<hr class="printable"/>';
 }

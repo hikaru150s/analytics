@@ -6,7 +6,7 @@ function view_groups($userid) {
 	$dataset = list_group_from_user($userid);
 
 	return
-		'<h1>Groups</h1>' .
+		'<h1 class="printable">Groups</h1>' .
 		print_table($dataset, 'table table-hover table-striped') .
-		'<hr/>';
+		'<hr class="printable"/>';
 }

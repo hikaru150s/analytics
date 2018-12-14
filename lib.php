@@ -201,10 +201,10 @@ function list_group_from_user($userid) {
 /*
 	Print table
 */
-function print_table($data, $class = null) {
+function print_table($data, $class = null, $printable = true) {
 	if (is_array($data) && count($data) > 0) {
 		$col = array_keys((array) reset($data));
-		$result = (is_null($class)) ? '<table>' : '<table class="' . $class . '">';
+		$result = (is_null($class)) ? '<table>' : '<table class="' . $class  . ($printable ? ' printable' : '') . '">';
 		
 		$result .= '<tr>';
 		foreach ($col as $v) {
@@ -234,11 +234,11 @@ function print_table($data, $class = null) {
 /*
 	Print Matrix
 */
-function print_matrix($data, $class = null, $preferClassColoring = false) {
+function print_matrix($data, $class = null, $preferClassColoring = false, $printable = true) {
 	if (is_array($data) && count($data) > 0) {
 		$col = array_keys((array) reset($data));
 		array_unshift($col, 'x');
-		$result = (is_null($class)) ? '<table>' : '<table class="' . $class . '">';
+		$result = (is_null($class)) ? '<table>' : '<table class="' . $class  . ($printable ? ' printable' : '') . '">';
 		
 		$result .= '<tr>';
 		foreach ($col as $v) {
@@ -318,10 +318,10 @@ function print_matrix($data, $class = null, $preferClassColoring = false) {
 /*
 	Print statistic data
 */
-function print_stat($stat) {
+function print_stat($stat, $printable = true) {
 	$data = (array) $stat;
 	if (is_array($data) && count($data) > 0) {
-		$result = '<table>';
+		$result = '<table' . ($printable ? ' class="printable"' : '') . '>';
 		
 		foreach ($data as $k => $v) {
 			$result .= '<tr>';
@@ -371,7 +371,7 @@ function normalize($arr, $field) {
 /*
 	Print Graph
 */
-function print_graph($arr, $chartname, $label, $value) {
+function print_graph($arr, $chartname, $label, $value, $printable = true) {
 	$jsaddr = 'js/Chart.bundle.min.js';
 	$data = array();
 	
@@ -399,7 +399,7 @@ function print_graph($arr, $chartname, $label, $value) {
 	$chart->options->scales->yAxes = array($tickOption);
 	
 	$line = '
-		<canvas id="' . $chartname . '" width="100%" height="50%"></canvas>
+		<canvas id="' . $chartname . '" width="100%" height="50%"' . ($printable ? ' class="printable"' : '') . '></canvas>
 		<script type="text/javascript" src="' . $jsaddr . '"></script>
 		<script>
 			var context = document.getElementById("' . $chartname . '");
@@ -413,14 +413,14 @@ function print_graph($arr, $chartname, $label, $value) {
 /*
 	Print Groups
 */
-function print_groups($data, $class = null) {
+function print_groups($data, $class = null, $printable = true) {
 	if (is_array($data) && count($data) > 0) {
 		$step1 = reset($data);
 		$step2 = reset($step1);
 		
 		$col = array_keys((array) $step2);
 		
-		$result = (is_null($class)) ? '<table>' : '<table class="' . $class . '">';
+		$result = (is_null($class)) ? '<table>' : '<table class="' . $class  . ($printable ? ' printable' : '') . '">';
 		
 		$c = 0;
 		$result .= '<tr>';
