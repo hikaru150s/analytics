@@ -15,17 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Plugin upgrade helper functions are defined here.
  *
  * @package     block_analytics
+ * @category    upgrade
  * @copyright   2018 Haikal Handamara <haikal_adha@hotmail.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'block_analytics';
-$plugin->release = '0.2.0';
-$plugin->version = 2018121400;
-$plugin->requires = 2017111300;
-$plugin->maturity = MATURITY_ALPHA;
+/**
+ * Helper function used by the upgrade.php file.
+ */
+function block_analytics_helper_function() {
+    global $DB;
+
+    // Please note that you should always be performing any task using raw (low
+    // level) database access exclusively, avoiding any use of the Moodle APIs.
+    //
+    // For more information please read the available Moodle documentation:
+    // https://docs.moodle.org/dev/Upgrade_API
+}

@@ -686,3 +686,27 @@ function correlate($courseid) {
 	// Return
 	return $mat;
 }
+
+/*
+	Get $userid about
+*/
+function get_about($userid) {
+	global $DB;
+	
+	$sql = "select b.firstname, b.lastname, a.about from mdl_block_analytics_about a, mdl_user b where a.userid = b.id and a.userid = $userid";
+	
+	$res = $DB->get_records_sql($sql);
+	
+	if (is_null($res) || (is_array($res) && count($res) == 0)) {
+		$data = new stdClass();
+		$data->userid = $userid;
+		$data->about = '';
+		$data->aboutformat = 1;
+		
+		$DB->insert_record('block_analytics_about', $data);
+		return get_about($userid);
+	} else {
+		$result = array_shift($res);
+		return $result;
+	}
+}

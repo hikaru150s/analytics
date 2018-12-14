@@ -5,9 +5,10 @@ function view_students($courseid, $blockid) {
 	// Show Students (and Everything)
 	$dataset = list_students_in_course($courseid);
 	// Add action
-	$act_url = new moodle_url('/blocks/analytics/view.php', array('type' => 'progress', 'courseid' => $courseid, 'blockid' => $blockid));
+	$view_url = new moodle_url('/blocks/analytics/view.php', array('type' => 'progress', 'courseid' => $courseid, 'blockid' => $blockid));
+	$about_url = new moodle_url('/blocks/analytics/about.php', array('courseid' => $courseid, 'blockid' => $blockid));
 	for ($i = 0; $i < count($dataset); $i++) {
-		$dataset[$i]->Action = '<a href="' . $act_url . '&studentid=' . $dataset[$i]->id . '">View</a>';
+		$dataset[$i]->Action = '<a href="' . $view_url . '&studentid=' . $dataset[$i]->id . '">View</a> | <a href="' . $about_url . '&studentid=' . $dataset[$i]->id . '">Summary</a>';
 	}
 
 	return

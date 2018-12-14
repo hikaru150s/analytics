@@ -20,6 +20,7 @@ require_login($course);
 $PAGE->set_url('/blocks/analytics/view.php', array('id' => $courseid));
 $PAGE->set_pagelayout('standard');
 $PAGE->set_heading('Statistic');
+$PAGE->set_title('Statistic');
 
 $settingsnode = $PAGE->settingsnav->add(ucfirst($type));
 $editurl = new moodle_url('/blocks/analytics/view.php', array('type' => $type, 'courseid' => $courseid, 'blockid' => $blockid));
