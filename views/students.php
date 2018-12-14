@@ -7,8 +7,9 @@ function view_students($courseid, $blockid) {
 	// Add action
 	$view_url = new moodle_url('/blocks/analytics/view.php', array('type' => 'progress', 'courseid' => $courseid, 'blockid' => $blockid));
 	$about_url = new moodle_url('/blocks/analytics/about.php', array('courseid' => $courseid, 'blockid' => $blockid));
+	$files_url = new moodle_url('/blocks/analytics/file.php', array('courseid' => $courseid, 'blockid' => $blockid));
 	for ($i = 0; $i < count($dataset); $i++) {
-		$dataset[$i]->Action = '<a href="' . $view_url . '&studentid=' . $dataset[$i]->id . '">View</a> | <a href="' . $about_url . '&studentid=' . $dataset[$i]->id . '">Summary</a>';
+		$dataset[$i]->Action = '<a href="' . $view_url . '&studentid=' . $dataset[$i]->id . '">View</a> | <a href="' . $about_url . '&studentid=' . $dataset[$i]->id . '">Summary</a> | <a href="' . $files_url . '&studentid=' . $dataset[$i]->id . '">Files</a>';
 	}
 
 	return

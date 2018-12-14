@@ -710,3 +710,33 @@ function get_about($userid) {
 		return $result;
 	}
 }
+
+/*
+	Get $userid files
+*/
+function get_user_files_collection($userid) {
+	global $DB;
+	
+	$sql = "select a.id, b.firstname, b.lastname, a.file from mdl_block_analytics_files a, mdl_user b where a.userid = b.id and a.userid = $userid";
+	
+	$res = $DB->get_records_sql($sql);
+	
+	if (is_null($res) || (is_array($res) && count($res) == 0)) {
+		if (!is_dir(__DIR__ . '/files/securedassets/' . $userid)) {
+			mkdir(__DIR__ . '/files/securedassets/' . $userid, 0666);
+		}
+		return null;
+	} else {
+		$result = new stdClass();
+		$result->files = array();
+		foreach ($res as $k => $v) {
+			$result->firstname = $v->firstname;
+			$result->lastname = $v->lastname;
+			$temp = new stdClass();
+			$temp->filename = $v->file;
+			$temp->id = $v->id;
+			$result->files[] = $temp;
+		}
+		return $result;
+	}
+}

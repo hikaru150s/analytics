@@ -93,6 +93,7 @@ class block_analytics extends block_list {
 		$context = context_course::instance($COURSE->id);
 		$baseview = '/blocks/analytics/view.php';
 		$baseabout = '/blocks/analytics/about.php';
+		$baselocal = '/blocks/analytics/file.php';
 		if ($depStatus) { // Dependencies ok
 			if ( has_capability('block/analytics:managepages', $context) ) {
 				// Teacher Mode
@@ -127,8 +128,14 @@ class block_analytics extends block_list {
 					'courseid'	=> $COURSE->id
 				));
 				
+				$localUrl = new moodle_url($baselocal, array(
+					'blockid'	=> $this->instance->id,
+					'courseid'	=> $COURSE->id
+				));
+				
 				$this->content->items[]  = html_writer::link($summaryUrl, 'See your progress.');
 				$this->content->items[]  = html_writer::link($aboutUrl, 'See or edit your summary');
+				$this->content->items[]  = html_writer::link($localUrl, 'Add or delete your private local files');
 			} else {
 				// Guest Mode
 				$this->content->text = 'Please login to see the content of this blocks.';
